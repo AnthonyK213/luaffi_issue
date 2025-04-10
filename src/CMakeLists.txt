@@ -21,9 +21,9 @@ target_link_libraries(
 add_custom_command(
   TARGET someexe POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_directory
-      "$<TARGET_PROPERTY:somelib,BINARY_DIR>/$<CONFIG>"
-      "$<TARGET_PROPERTY:someexe,BINARY_DIR>/$<CONFIG>"
+      "$<TARGET_PROPERTY:somelib,BINARY_DIR>/$<$<BOOL:${CMAKE_CONFIGURATION_TYPES}>:$<CONFIG>>"
+      "$<TARGET_PROPERTY:someexe,BINARY_DIR>/$<$<BOOL:${CMAKE_CONFIGURATION_TYPES}>:$<CONFIG>>"
   COMMAND ${CMAKE_COMMAND} -E copy
-      "${CMAKE_CURRENT_SOURCE_DIR}/main.lua"
-      "$<TARGET_PROPERTY:someexe,BINARY_DIR>/$<CONFIG>"
+      "$<TARGET_PROPERTY:someexe,SOURCE_DIR>/main.lua"
+      "$<TARGET_PROPERTY:someexe,BINARY_DIR>/$<$<BOOL:${CMAKE_CONFIGURATION_TYPES}>:$<CONFIG>>"
   )
